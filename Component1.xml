@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bns:Component xmlns:bns="http://api.platform.boomi.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" componentId="ebcfc523-383b-4b99-ad27-21476931ecdd" createdBy="debasishp@kovair.com" createdDate="2022-04-27T13:49:11Z" currentVersion="true" deleted="false" folderFullPath="Kovair Software Inc./Process Library" folderId="Rjo0ODA4MTUx" folderName="Process Library" modifiedBy="debasishp@kovair.com" modifiedDate="2022-05-10T09:38:18Z" name="Component_1" type="process" version="8">
+<bns:encryptedValues/>
+<bns:description/>
+<bns:object>
+<process allowSimultaneous="false" enableUserLog="false" processLogOnErrorOnly="false" purgeDataImmediately="false" updateRunDates="true" workload="general">
+<shapes>
+<shape image="start" name="shape1" shapetype="start" userlabel="" x="96.0" y="96.0">
+<configuration>
+<noaction/>
+</configuration>
+<dragpoints>
+<dragpoint name="shape1.dragpoint1" toShape="shape2" x="256.0" y="41.0">
+<linesegment length="0" name="shape1.dragpoint1.lineseg1" orient="horizontal" x="130.0" y="111.0"/>
+<linesegment length="0" name="shape1.dragpoint1.lineseg2" orient="vertical" x="130.0" y="111.0"/>
+<linesegment length="71" name="shape1.dragpoint1.lineseg3" orient="horizontal" x="130.0" y="111.0"/>
+<linesegment length="64" name="shape1.dragpoint1.lineseg4" orient="vertical" x="201.0" y="47.0"/>
+<linesegment length="55" name="shape1.dragpoint1.lineseg5" orient="horizontal" x="201.0" y="47.0"/>
+</dragpoint>
+</dragpoints>
+</shape>
+<shape image="notify_icon" name="shape2" shapetype="notify" userlabel="Notify kovair" x="272.0" y="32.0">
+<configuration>
+<notify disableEvent="true" enableUserLog="false" perExecution="false" title="">
+<notifyMessage>hi kovair</notifyMessage>
+<notifyMessageLevel>INFO</notifyMessageLevel>
+<notifyParameters/>
+</notify>
+</configuration>
+<dragpoints>
+<dragpoint name="shape2.dragpoint1" toShape="shape3" x="384.0" y="73.0">
+<linesegment length="0" name="shape2.dragpoint1.lineseg1" orient="horizontal" x="306.0" y="47.0"/>
+<linesegment length="0" name="shape2.dragpoint1.lineseg2" orient="vertical" x="306.0" y="47.0"/>
+<linesegment length="47" name="shape2.dragpoint1.lineseg3" orient="horizontal" x="306.0" y="47.0"/>
+<linesegment length="32" name="shape2.dragpoint1.lineseg4" orient="vertical" x="353.0" y="47.0"/>
+<linesegment length="31" name="shape2.dragpoint1.lineseg5" orient="horizontal" x="353.0" y="79.0"/>
+</dragpoint>
+</dragpoints>
+</shape>
+<shape image="stop_icon" name="shape3" shapetype="stop" userlabel="End of the process" x="400.0" y="64.0">
+<configuration>
+<stop continue="false"/>
+</configuration>
+<dragpoints/>
+</shape>
+<shape image="connectoraction_icon" name="shape8" shapetype="connectoraction" userlabel="Jira" x="256.0" y="144.0">
+<configuration>
+<connectoraction actionType="QUERY" allowDynamicCredentials="NONE" connectionId="f7604a04-b925-4726-8254-62c0ea036a06" connectorType="wdci-MW671S-jirare-prod" hideSettings="false" operationId="deebfeb5-3f38-48c4-b8f9-d525d08cbe21">
+<parameters/>
+<dynamicProperties/>
+</connectoraction>
+</configuration>
+<dragpoints>
+<dragpoint name="shape8.dragpoint1" toShape="shape2" x="256.0" y="41.0">
+<linesegment length="10" name="shape8.dragpoint1.lineseg1" orient="horizontal" x="290.0" y="159.0"/>
+<linesegment length="51" name="shape8.dragpoint1.lineseg2" orient="vertical" x="300.0" y="108.0"/>
+<linesegment length="48" name="shape8.dragpoint1.lineseg3" orient="horizontal" x="252.0" y="108.0"/>
+<linesegment length="61" name="shape8.dragpoint1.lineseg4" orient="vertical" x="252.0" y="47.0"/>
+<linesegment length="4" name="shape8.dragpoint1.lineseg5" orient="horizontal" x="252.0" y="47.0"/>
+</dragpoint>
+</dragpoints>
+</shape>
+</shapes>
+</process>
+</bns:object>
+<bns:processOverrides/>
+</bns:Component>

@@ -1,0 +1,809 @@
+package com.kovair.devops.util;
+
+import com.kovair.devops.dbManager.GlobalManager;
+import com.kovair.devops.dbManager.TemplateRepository;
+import com.kovair.devops.dbManager.ToolinstanceDetailsRepository;
+import com.kovair.devops.model.Template;
+import com.kovair.devops.model.ToolinstanceDetails;
+import com.kovair.devops.opManager.PluginRepoManager;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class PluginParams {
+
+	@Autowired
+	ToolinstanceDetailsRepository toolinstanceDetailsRepository;
+	@Autowired
+	TemplateRepository templaterepository;
+	@Autowired
+	PluginRepoManager pluginrepository;
+
+	public int Order;
+	public boolean IsEncrypted;
+	public boolean IsRequired;
+	public String ParamName;
+	public String ParamType;
+	public String ParamValue;
+	public List<String> Options;
+	public String HelpText;
+	public String IsSequirityparam;
+        
+
+	// Getter Methods
+
+	public int getOrder() {
+		return Order;
+	}
+
+	public String getParamName() {
+		return ParamName;
+	}
+
+	public String getParamType() {
+		return ParamType;
+	}
+
+	public String getParamValue() {
+		return ParamValue;
+	}
+
+	public boolean getIsEncrypted() {
+		return IsEncrypted;
+	}
+
+	public boolean getIsRequired() {
+		return IsRequired;
+	}
+
+	public List<String> getOptions() {
+		return Options;
+	}
+
+	public String getHelpText() {
+		return HelpText;
+	}
+
+	// Setter Methods
+
+	public void setOrder(int Order) {
+		this.Order = Order;
+	}
+
+	public void setParamName(String ParamName) {
+		this.ParamName = ParamName;
+	}
+
+	public void setParamType(String ParamType) {
+		this.ParamType = ParamType;
+	}
+
+	public void setParamValue(String ParamValue) {
+		this.ParamValue = ParamValue;
+	}
+
+	public void setIsEncrypted(boolean IsEncrypted) {
+		this.IsEncrypted = IsEncrypted;
+	}
+
+	public void setIsRequired(boolean IsRequired) {
+		this.IsRequired = IsRequired;
+	}
+
+	public void setOptions(List<String> Options) {
+		this.Options = Options;
+	}
+
+	public void setHelpText(String HelpText) {
+		this.HelpText = HelpText;
+	}
+
+	public String getIsSequirityparam() {
+		return IsSequirityparam;
+	}
+
+	public void setIsSequirityparam(String IsSequirityparam) {
+		this.IsSequirityparam = IsSequirityparam;
+	}
+
+	public Object[] getParamCount(List<PluginParams> pluginparam) {
+		Object[] objParam = new Object[2];
+		int cntParam = pluginparam.size();
+		int reqParam = 0;
+
+		if (cntParam > 0) {
+			for (PluginParams eachParam : pluginparam) {
+				if (eachParam.IsRequired) {
+					reqParam = reqParam + 1;
+				}
+			}
+		}
+		objParam[0] = cntParam;
+		objParam[1] = reqParam;
+
+		return objParam;
+	}
+
+	public String getParamTypeStr(PluginParams pluginparam, int tabindex,String pluginKey) {
+		String retStr = "";
+		String req = "";
+		String reqClass = "";
+		String texttype = "text";
+		String cssclass = "form-control";
+		String issequrityParam = "N";
+		String promptPosition = "";
+
+		switch (pluginparam.ParamType) {
+		case "SingleLineText":
+			req = "";
+			reqClass = "";
+
+			if (pluginparam.IsEncrypted) {
+				texttype = "password";
+			}
+			if (pluginparam.IsRequired) {
+				req = "required";
+				reqClass = " validate[required]";
+				promptPosition = " data-prompt-position=\"topRight:-100,3\" ";
+			}
+			if (pluginparam.IsSequirityparam.equals("Y")) {
+				issequrityParam = "Y";
+			}
+			retStr = "<div class=\"input-group\">";
+			retStr += "<input tabindex='" + tabindex + "' order='" + pluginparam.Order + "' issequirityparam='"
+					+ issequrityParam + "' paramtype='SingleLineText' class='" + cssclass + " inputfrm" + reqClass
+					+ "' " + promptPosition + " " + req + " type='" + texttype + "' id='"
+					+ pluginparam.ParamName.replace(" ", "") + "' name='" + pluginparam.ParamName + "' value=\""
+					+ pluginparam.ParamValue + "\" autocomplete=\"new-password\" />";
+
+			retStr += "<div class=\"input-group-btn\">" + "<button type=\"button\" id=\"btn_"
+					+ pluginparam.ParamName.replace(" ", "")
+					+ "\" onclick=\"LoadTreeData(event)\" class=\"btn dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\" style=\"height: 36px;\">\r\n"
+					+ "<span class=\"glyphicon glyphicon-import\" aria-hidden=\"true\"></span>\r\n"
+					+ "<span class=\"sr-only\">Toggle Dropdown</span>\r\n" + "</button>\r\n" + "</div>\r\n" + "</div>";
+			break;
+
+		case "MultiLineText":
+			req = "";
+			reqClass = "";
+			if (pluginparam.IsRequired) {
+				req = "required";
+				reqClass = " validate[required]";
+				promptPosition = " data-prompt-position=\"topRight:-100,3\" ";
+			}
+			if (pluginparam.IsSequirityparam.equals("Y")) {
+				issequrityParam = "Y";
+			}
+			//retStr="<div class=\"textarea-container\">";
+			retStr = "<div class=\"input-group\">";
+			retStr =retStr+ "<textarea style=\"resize: none;\" tabindex='" + tabindex + "' order='" + pluginparam.Order + "' issequirityparam='"
+					+ issequrityParam + "' paramtype='MultiLineText' class='" + cssclass + " inputfrm" + reqClass + "' "
+					+ promptPosition + " " + req + " id='" + pluginparam.ParamName.replace(" ", "") + "' name='"
+					+ pluginparam.ParamName + "' rows='3'>" + pluginparam.ParamValue + "</textarea>";
+			retStr += "<div class=\"input-group-btn\">";
+			retStr += "<button type=\"button\" id=\"btn_"
+					+ pluginparam.ParamName.replace(" ", "")
+					+ "\" onclick=\"LoadTreeData(event)\" class=\"btn dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\" style=\"height: 74px;\">\r\n"
+					+ "<span class=\"glyphicon glyphicon-import\" aria-hidden=\"true\"></span>\r\n"
+					+ "<span class=\"sr-only\">Toggle Dropdown</span>\r\n" + "</button>\r\n" + "</div>\r\n" + "</div>";
+			break;
+
+		case "Lookup":
+			req = "";
+			reqClass = "";
+			if (pluginparam.IsRequired) {
+				req = "required";
+				reqClass = " validate[required]";
+				promptPosition = " data-prompt-position=\"topRight:-100,3\" ";
+			}
+			if (pluginparam.IsSequirityparam.equals("Y")) {
+				issequrityParam = "Y";
+			}
+
+			if(pluginKey.startsWith("KovairDevOpsPlugin") && pluginparam.ParamName.equals("Pipeline"))
+			{
+				
+				retStr = "<select tabindex='" + tabindex + "' order='" + pluginparam.Order + "' issequirityparam='"
+						+ issequrityParam + "' paramtype='Lookup' class='selectpicker " + cssclass + " inputfrm" + reqClass + "' "
+						+ promptPosition + " " + req + " id='" + pluginparam.ParamName.replace(" ", "") + "' name='"
+						+ pluginparam.ParamName + "' data-live-search='true' data-dropup-auto='false' data-size='3' disabled>"
+						+ "<option value=\"-1\">Please Select</option></select>";
+			}
+			else
+			{
+				
+				retStr = "<select tabindex='" + tabindex + "' order='" + pluginparam.Order + "' issequirityparam='"
+						+ issequrityParam + "' paramtype='Lookup' class='" + cssclass + " inputfrm" + reqClass + "' "
+						+ promptPosition + " " + req + " id='" + pluginparam.ParamName.replace(" ", "") + "' name='"
+						+ pluginparam.ParamName + "'>";
+			}
+
+			
+			
+			if (pluginparam.Options != null && pluginparam.Options.size() > 0) {
+				String selectedVal = "";
+				String initialSelected = "";
+				boolean initialselected = true;
+
+				for (String option : pluginparam.Options) {
+					selectedVal = "";
+					if (option.equals(pluginparam.ParamValue)) {
+						selectedVal = "selected";
+						initialselected = false;
+					}
+
+					retStr = retStr + "<option value='" + option + "' " + selectedVal + ">" + option + "</option>";
+				}
+
+				if (initialselected) {
+					initialSelected = "selected";
+				}
+				retStr = retStr + "<option value='' " + initialSelected + " >--Select One--</option>";
+			}
+			retStr = retStr + "</select>";
+			break;
+
+		default:
+			req = "";
+			reqClass = "";
+			if (pluginparam.IsEncrypted) {
+				texttype = "password";
+			}
+			if (pluginparam.IsRequired) {
+				req = "required";
+				reqClass = " validate[required] data-prompt-position=\"topRight:-100,3\"";
+			}
+			if (pluginparam.IsSequirityparam.equals("Y")) {
+				issequrityParam = "Y";
+			}
+			retStr = "<input tabindex='" + tabindex + "' order='" + pluginparam.Order + "' issequirityparam='"
+					+ issequrityParam + "' paramtype='SingleLineText' class='" + cssclass + " inputfrm" + reqClass
+					+ "'' " + req + " type='" + texttype + "' id='" + pluginparam.ParamName.replace(" ", "")
+					+ "' title='" + pluginparam.ParamName + "' name='" + pluginparam.ParamName
+					+ "' autocomplete=\"new-password\" />";
+			break;
+
+		}
+
+		return retStr;
+	}        
+                      
+	public String getFormHTML(List<PluginParams> pluginparam, Long toolinstanceid, String pluginKey, String methodName,String methodtemplate,
+			Long taskid,boolean onlyforhost) {
+		String retStr = "";
+		List<ToolinstanceDetails> toolinstanceDetails = null;
+		ToolinstanceDetails toolinstancedtl = null;
+		List<Template> templateList = null;
+		String templateOptions = "";
+		String selectedTemplateid = "";
+		String selected = "";
+		String toolname = "";
+		String fieldIds = "[";
+		String required = "";
+		String eachFormControl = "" ;
+		String pipelineSelectControl = "";
+		try {
+			boolean isAlmTypeTool =methodtemplate!=null && !methodtemplate.isEmpty() &&(methodtemplate.equalsIgnoreCase("AddForm")
+					||methodtemplate.equalsIgnoreCase("ModifyForm")||methodtemplate.equalsIgnoreCase("AddComment")||methodtemplate.equalsIgnoreCase("AddAttachment"));
+                        
+                        boolean needAlmTypeInputForm = methodtemplate!=null && methodtemplate.isEmpty();
+			
+			if (toolinstanceid != 0) {
+				toolinstanceDetails = toolinstanceDetailsRepository.findByToolinstanceToolinstanceid(toolinstanceid);
+			}
+
+			if (pluginKey != "") {
+				templateList = templaterepository.findByPluginname(pluginKey);
+				com.kovair.devops.model.Plugin pluginDetails = pluginrepository.getPluginByTitle(pluginKey);
+				toolname = pluginDetails.getToolName();
+
+				if (templateList != null && templateList.size() > 0) {
+					String templateid = "";
+					String templatename = "";
+					selected = "";
+					if (taskid == 0) {
+						selectedTemplateid = templateList.get(0).getTemplateid().toString();
+					}
+
+					for (Template eachParam : templateList) {
+						templateid = eachParam.getTemplateid().toString();
+						templatename = eachParam.getTemplatename();
+						if (selectedTemplateid.equalsIgnoreCase(templateid)) {
+							selected = "selected";
+						}
+
+						templateOptions = templateOptions + "<option value=\"" + templateid + "\" " + selected + ">"
+								+ templatename + "</option>";
+					}
+				} else {
+					// templatelist id null
+				}
+			}
+			List<ToolinstanceDetails> result1 = null;
+			String paramvalue="";
+			toolinstancedtl=null;
+			if (toolinstanceDetails != null) {
+				result1 = toolinstanceDetails.stream()
+						.filter(a -> Objects.equals(a.getParamname(), "inputhostname"))
+						.collect(Collectors.toList());
+			}
+			
+			if (result1 != null && result1.size() > 0) {
+				toolinstancedtl = result1.get(0);
+				if(toolinstancedtl!=null)
+				{
+					paramvalue = toolinstancedtl.getParamvalue();
+				}
+				
+			}
+			if(onlyforhost)
+			{
+				retStr="<div class=\"\" style=\"max-height: 61px;\">\r\n" + 
+						"				\r\n" + 
+						"				\r\n" + 
+						"				<form class=\"form-horizontal\" id=\"paramFrmagent\" name=\"paramFrm\"  autocomplete=\"off\"  style=\"padding-top: 35px;\">\r\n" + 
+						"				<fieldset>\r\n" + 
+						"\r\n" + 
+						"				<div class=\"form-group\">\r\n" + 
+						"				\r\n" + 
+						"				<div class=\"form-group paddingtop\">\r\n" + 
+						"				<label class=\"col-md-3 control-label\">Override Execution Host </label>\r\n" + 
+						"				<div class=\"col-md-8\">\r\n" + 
+						"				<div class=\"input-group\">\r\n" + 
+						"				<input issequirityparam=\"N\" paramtype=\"SingleLineText\" class=\"form-control inputfrm\" type=\"text\" id=\"inputhostname\" name=\"inputhostname\" value=\""+paramvalue+"\" autocomplete=\"new-password\">\r\n" + 
+						"					<div class=\"input-group-btn\">\r\n" + 
+						"						<button type=\"button\" id=\"btn_inputhostname\" onclick=\"LoadTreeDataagent(event)\" class=\"btn dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\" style=\"height: 36px;\">\r\n" + 
+						"							<span class=\"glyphicon glyphicon-import\" aria-hidden=\"true\"></span>\r\n" + 
+						"							<span class=\"sr-only\">Toggle Dropdown</span>\r\n" + 
+						"						</button>\r\n" + 
+						"					</div>\r\n" + 
+						"				</div>\r\n" + 
+						"				</div>\r\n" + 
+						"					<div class=\"col-md-1\" style=\"padding-top:12px;\"><span class=\"glyphicon glyphicon-info-sign pop\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"If this field left empty, then the configured execution host will be considered as a host for this task.\" data-original-title=\"\" title=\"\"></span>\r\n" + 
+						"					</div></div></div>\r\n" + 
+						"						</fieldset>\r\n" + 
+						"						</form>\r\n" + 
+						"				\r\n" + 
+						"				</div>";
+				
+				retStr = retStr + " <script> $(\".pop\").popover({ trigger: \"manual\" , html: true, animation:false})"
+		                  + ".on(\"click\", function () {"
+		                  + " var _this = this; "
+		                  + " $(this).popover(\"show\"); "
+		                  + "});"
+		                  +"$('body').on('click', function (e) {\r\n" + 
+		                  "    $('[data-toggle=popover]').each(function () {\r\n" + 
+		                  "        // hide any open popovers when the anywhere else in the body is clicked\r\n" + 
+		                  "        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {\r\n" + 
+		                  "            $(this).popover('hide');\r\n" + 
+		                  "        }\r\n" + 
+		                  "    });\r\n" + 
+		                  "});"
+		                  + " </script> ";
+			}
+			else
+			{
+			// String sql =
+			// String.format(InlineQuery.QueryRepository.get("SelectTemplates"),pluginKey);
+			// List<Object[]> templates = GlobalManager.ExecuteSelectQuery(sql);
+
+			if (pluginparam != null && pluginparam.size() > 0) {
+				retStr = "<form class=\"form-horizontal\" id=\"paramFrm\" name=\"paramFrm\"  autocomplete=\"off\"  style=\"padding-top: 35px;\">";
+				retStr = retStr + "<fieldset>";
+
+				retStr = retStr + "<div class=\"form-group\">";
+				retStr = retStr + "<label class=\"col-md-3 control-label\">Template</label>";
+				retStr = retStr + "<div class=\"col-md-4\">";
+
+				if (templateOptions != "" || !templateOptions.isEmpty()) {
+					retStr = retStr + "<select id=\"ddltemplate\" name=\"" + toolname
+							+ "\"onchange=\"changeTemplte()\" class=\"selectpicker form-control \" title=\"Select Template\" data-size=\"4\" data-live-search=\"true\" ><option value=\"\">None</option><option value=\"0\">Create New</option>"
+							+ templateOptions + "</select>";
+				} else {
+					retStr = retStr + "<select id=\"ddltemplate\" name=\"" + toolname
+							+ "\" onchange=\"changeTemplte()\" class=\"selectpicker form-control\" title=\"Select Template\" data-size=\"4\" data-live-search=\"true\" ><option value=\"\">None</option><option value=\"0\" selected>Create New</option></select>";
+				}
+
+				retStr = retStr + "</div>";
+				retStr = retStr
+						+ "<div class=\"col-md-4\"><input id= \"templatename\" class=\"form-control inputfrm\" data-prompt-position=\"topRight:-100,3\" type=\"text\" placeholder=\"Enter Template Name\" readonly></div></div>";
+				retStr = retStr + "</div>";
+				retStr = retStr + "</div>";
+			}
+
+			int tabindex = 0;
+			//retStr=retStr+"<div class=\"collapsible first\"  >" ;
+			//retStr=retStr+"<span>Plugin Fields </span>";
+			//retStr=retStr+"</div>" ;
+			//retStr=retStr+"<div class=\"col-content\">";
+			for (PluginParams eachParam : pluginparam) {
+				toolinstancedtl = null;
+				List<ToolinstanceDetails> result = null;
+
+				if ((isAlmTypeTool && eachParam.getIsSequirityparam().equalsIgnoreCase("Y")) || (!isAlmTypeTool && needAlmTypeInputForm && pluginKey.startsWith("KovairDevOpsPlugin")) || (!isAlmTypeTool && needAlmTypeInputForm && eachParam.getIsSequirityparam().equalsIgnoreCase("Y"))) {
+
+					if (toolinstanceDetails != null) {
+						result = toolinstanceDetails.stream()
+								.filter(a -> Objects.equals(a.getParamname(), eachParam.ParamName))
+								.collect(Collectors.toList());
+					}
+
+					eachParam.ParamValue = "";
+
+					if (result != null && result.size() > 0) {
+						toolinstancedtl = result.get(0);
+						eachParam.ParamValue = toolinstancedtl.getParamvalue();
+					}
+
+					required = "";
+					String helptext = eachParam.HelpText;
+					if (helptext.trim().equals("")) {
+						helptext = eachParam.ParamName;
+					}
+					if (eachParam.IsRequired) {
+						required = "<font style='color:red;'>*</font>";
+
+						if (fieldIds.equalsIgnoreCase("[")) {
+							fieldIds = fieldIds + "\"" + eachParam.ParamName.replace(" ", "") + "\"";
+						} else {
+							fieldIds = fieldIds + ",\"" + eachParam.ParamName.replace(" ", "") + "\"";
+						}
+
+					}
+					if(tabindex==0)
+					{
+						eachFormControl = "<div class=\"form-group paddingtop\">";
+					}
+					else
+					{
+						eachFormControl = "<div class=\"form-group\">";
+					}
+					
+					eachFormControl = eachFormControl + "<label class=\"col-md-3 control-label\" >" + eachParam.ParamName + " " + required
+							+ "</label>";
+					eachFormControl = eachFormControl + "<div class=\"col-md-8\">";
+					eachFormControl = eachFormControl + getParamTypeStr(eachParam, ++tabindex,pluginKey);
+					eachFormControl = eachFormControl + "</div>";
+					eachFormControl =eachFormControl+"<div class=\"col-md-1\" style=\"padding-top:12px;\">";
+					eachFormControl = eachFormControl + "<span class=\"glyphicon glyphicon-info-sign pop\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\""+helptext+"\"></span>"; 
+					eachFormControl = eachFormControl + "</div>";
+					eachFormControl = eachFormControl + "</div>";
+					
+					if(pluginKey.startsWith("KovairDevOpsPlugin") && eachParam.ParamName.equals("Pipeline"))
+					{
+						
+						pipelineSelectControl = eachFormControl;
+					}
+					else
+					{
+						retStr = retStr + eachFormControl;
+					}
+				}
+			}
+
+		
+
+			List<FieldDetails> selectInfoList = new ArrayList<FieldDetails>();
+                        FieldDetails selectInfo = null;
+                        List<String> optionNameList = null;
+                        List<String> optionValueList = null;
+                        ButtonsInfo buttonsInfo = null;
+			if (isAlmTypeTool) {
+                            
+                            buttonsInfo = new ButtonsInfo("Fetch MetaData","fetchMetadata","PreFetchProjects();","Undo","undo","ClearMetaData()");                         
+                            optionNameList = null;
+                            optionNameList = new ArrayList<String>();
+                            optionNameList.add("Projects");
+                            optionValueList = null;
+                            optionValueList = new ArrayList<String>();
+                            optionValueList.add("Projects");
+                            selectInfo = null;
+                            selectInfo = new FieldDetails("Project","ddlproject","sysProject","Select project accordingly.","Lookup",optionNameList,optionValueList,"OnProjectChange(this)");
+                            selectInfoList.add(selectInfo);
+                            if (fieldIds.equalsIgnoreCase("[")) {
+                                fieldIds = fieldIds + "\"ddlproject\"";
+                            } else {
+                                    fieldIds = fieldIds + "," + "\"ddlproject\"";
+                            }
+                            
+                            optionNameList = null;
+                            optionNameList = new ArrayList<String>();
+                            optionNameList.add("Entities");
+                            optionValueList = null;
+                            optionValueList = new ArrayList<String>();
+                            optionValueList.add("Entities");
+                            selectInfo = null;
+                            selectInfo = new FieldDetails("Entity","ddlentity","sysEntity","Select entity accordingly.","Lookup",optionNameList,optionValueList,"PreOnEntityChange(this,'')");
+                            selectInfoList.add(selectInfo);
+                            if (fieldIds.equalsIgnoreCase("[")) {
+                                fieldIds = fieldIds + "\"ddlentity\"";
+                            } else {
+                                    fieldIds = fieldIds + "," + "\"ddlentity\"";
+                            }
+                            
+                            if(methodtemplate.equalsIgnoreCase("ModifyForm")|| methodtemplate.equalsIgnoreCase("AddComment"))
+                            {
+                                selectInfo = null;
+                                selectInfo = new FieldDetails("EntityId","ddlEntityId","sysEntityId","Put the entityid here.","SingleLineText",null,null,"");
+                                selectInfoList.add(selectInfo);
+                                if (fieldIds.equalsIgnoreCase("[")) {
+                                    fieldIds = fieldIds + "\"ddlEntityId\"";
+                                } else {
+                                    fieldIds = fieldIds + "," + "\"ddlEntityId\"";
+                                }
+                            }
+				
+                            if(methodtemplate.equalsIgnoreCase("AddAttachment"))
+                            {
+                                selectInfo = null;
+                                selectInfo = new FieldDetails("EntityId","EntityId","EntityId","The record id of the Kovair ALM entity item.","SingleLineText",null,null,"");
+                                selectInfoList.add(selectInfo);
+                                if (fieldIds.equalsIgnoreCase("[")) {
+                                    fieldIds = fieldIds + "\"EntityId\"";
+                                } else {
+                                    fieldIds = fieldIds + "," + "\"EntityId\"";
+                                }
+
+
+                                selectInfo = null;
+                                selectInfo = new FieldDetails("Attachment Path","AttachmentPath","AttachmentPath","File or folder path of attachment, that is going to be attached.","SingleLineText",null,null,"");
+                                selectInfoList.add(selectInfo);
+                                if (fieldIds.equalsIgnoreCase("[")) {
+                                    fieldIds = fieldIds + "\"AttachmentPath\"";
+                                } else {
+                                    fieldIds = fieldIds + "," + "\"AttachmentPath\"";
+                                }
+
+                                
+                                optionNameList = null;
+                                optionNameList = new ArrayList<String>();
+                                optionNameList.add("Yes");
+                                optionNameList.add("No");
+                                optionValueList = null;
+                                optionValueList = new ArrayList<String>();
+                                optionValueList.add("Yes"); 
+                                optionValueList.add("No"); 
+                                selectInfo = null;
+                                selectInfo = new FieldDetails("IsCompressed","IsCompressed","IsCompressed","Attachment will be compressed or not.","Lookup",optionNameList,optionValueList,"");
+                                selectInfoList.add(selectInfo);
+                                if (fieldIds.equalsIgnoreCase("[")) {
+                                    fieldIds = fieldIds + "\"IsCompressed\"";
+                                } else {
+                                    fieldIds = fieldIds + "," + "\"IsCompressed\"";
+                                }
+
+                                
+                                optionNameList = null;
+                                optionNameList = new ArrayList<String>();
+                                optionNameList.add("None");
+                                optionNameList.add("Yes");
+                                optionNameList.add("No");
+                                optionValueList = null;
+                                optionValueList = new ArrayList<String>();
+                                optionValueList.add("None"); 
+                                optionValueList.add("Yes"); 
+                                optionValueList.add("No"); 
+                                selectInfo = null;
+                                selectInfo = new FieldDetails("DateTime Prefix","DateTimePrefix","DateTimePrefix","There will be any datetime prefix or not with attachment.","Lookup",optionNameList,optionValueList,"");
+                                selectInfoList.add(selectInfo);
+                                if (fieldIds.equalsIgnoreCase("[")) {
+                                    fieldIds = fieldIds + "\"DateTimePrefix\"";
+                                } else {
+                                    fieldIds = fieldIds + "," + "\"DateTimePrefix\"";
+                                }
+                            }
+                            else
+                            {
+                                
+                                optionNameList = null;
+                                optionNameList = new ArrayList<String>();
+                                optionNameList.add("Fields");
+                                optionValueList = null;
+                                optionValueList = new ArrayList<String>();
+                                optionValueList.add("Fields"); 
+                                selectInfo = null;
+                                selectInfo = new FieldDetails("Field","ddlfield",toolname + "_Field","Select field accordingly.","LookupButton",optionNameList,optionValueList,"");
+                                selectInfoList.add(selectInfo);
+                                if (fieldIds.equalsIgnoreCase("[")) {
+                                    fieldIds = fieldIds + "\"ddlfield\"";
+                                } else {
+                                    fieldIds = fieldIds + "," + "\"ddlfield\"";
+                                }
+                                
+                                FldListWithPluginInfo fldListWithPluginInfo = new FldListWithPluginInfo(selectInfoList,false,pluginKey);
+                                retStr = retStr + getHtmlFromFetchMetaDataButton(fldListWithPluginInfo,buttonsInfo);
+                            }
+				
+			}
+			else if(pluginKey.startsWith("KovairDevOpsPlugin"))
+			{
+                            buttonsInfo = null;
+                            buttonsInfo = new ButtonsInfo("Get Pipelines","fetchLookupValues","FetchLookupValues()","Undo","undolookup","ClearLookupMetaData(event)");
+                            
+                            FldListWithPluginInfo fldListWithPluginInfo = new FldListWithPluginInfo(selectInfoList,false,pluginKey);
+                            
+                            retStr = retStr + getHtmlFromFetchMetaDataButton(fldListWithPluginInfo,buttonsInfo);
+                            
+                            retStr += pipelineSelectControl;
+			}
+                        else if(pluginKey.startsWith("BoomiPlugin"))
+                        {
+                            buttonsInfo = null;
+                            buttonsInfo = new ButtonsInfo("Fetch MetaData","fetchMetadata","PreFetchProjects();","Undo","undo","ClearMetaData()");
+                            
+                            optionNameList = null;
+                            optionNameList = new ArrayList<String>();
+                            optionNameList.add("components");
+                            optionValueList = null;
+                            optionValueList = new ArrayList<String>();
+                            optionValueList.add("components"); 
+                            selectInfo = new FieldDetails("Components","components","components","Select component id, which will be packaged.","Lookup",optionNameList,optionValueList,"");
+                            selectInfoList.add(selectInfo);
+                            if (fieldIds.equalsIgnoreCase("[")) {
+                                fieldIds = fieldIds + "\"components\"";
+                            } else {
+                                fieldIds = fieldIds + "," + "\"components\"";
+                            }
+                            
+                            FldListWithPluginInfo fldListWithPluginInfo = new FldListWithPluginInfo(selectInfoList,false,pluginKey);
+                            
+                            retStr += getHtmlFromFetchMetaDataButton(fldListWithPluginInfo,buttonsInfo); 
+                        }
+			
+			fieldIds = fieldIds + "];";
+			retStr = retStr + "</fieldset>";
+			retStr = retStr + "</form>";
+			
+                       
+                        
+                        retStr  = retStr + "<script> $('#ddltemplate').selectpicker('refresh'); $('#Pipeline').selectpicker('refresh');"
+                                        +"$('#ddlproject').selectpicker('refresh');"
+                                        +"$('#ddlentity').selectpicker('refresh');"
+                                        +"$('#ddlfield').selectpicker('refresh');"
+                                        +"$('.bootstrap-select > .dropdown-toggle').attr('style','height:36px; border-radius: 4px;');"
+                                        + "if($('#ddltemplate option:selected').val() == \"0\")" + "{"
+                                        + "	document.getElementById(\"templatename\").readOnly = false;"
+                                        + "	document.getElementById(\"templatename\").focus();" + "} " + "var fieldids = " + fieldIds
+                                        + "</script>";
+
+                        retStr = retStr + " <script> $(\".pop\").popover({ trigger: \"manual\" , html: true, animation:false})"
+                          + ".on(\"click\", function () {"
+                          + " var _this = this; "
+                          + " $(this).popover(\"show\"); "
+                          + "});"
+                          +"$('body').on('click', function (e) {\r\n" + 
+                          "    $('[data-toggle=popover]').each(function () {\r\n" + 
+                          "        // hide any open popovers when the anywhere else in the body is clicked\r\n" + 
+                          "        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {\r\n" + 
+                          "            $(this).popover('hide');\r\n" + 
+                          "        }\r\n" + 
+                          "    });\r\n" + 
+                          "});"
+                          + " </script> ";	
+                        
+
+			if (taskid == 0) {
+				retStr = retStr + "<script>checkInvalidInput(\"templatename\");changeTemplte();</script>";
+			}
+			}
+
+		} catch (Exception e) {
+
+		}
+		return retStr;
+	}
+        
+private String getHtmlFromFetchMetaDataButton(FldListWithPluginInfo fldListWithPluginInfo, ButtonsInfo buttonsInfo)
+{
+    String retStr = "";
+    if(fldListWithPluginInfo != null && buttonsInfo != null)
+    {
+        retStr = retStr + "<div class=\"form-group\">";
+        retStr = retStr + "<div class=\"modal-footer1\" >" + 
+                          "<input type=\"hidden\" id=\"hiddenparamSaved\" value=\"0\">\r\n" + 
+                          "<button onclick=\"" + (!buttonsInfo.button1Onclick.isEmpty()?buttonsInfo.button1Onclick: "") + "\"" + " type=\"button\" class=\"btn btn-primary\" id=\""+ buttonsInfo.button1Id + "\">\r\n" +
+                          "<i class=\"fa fa-download\" aria-hidden=\"true\"></i>" + 
+                          buttonsInfo.button1Label + "\r\n" + 
+                          "</button>\r\n" + 
+                          "<button type=\"button\" class=\"btn\" onclick=\"" + (!buttonsInfo.button2Onclick.isEmpty()?buttonsInfo.button2Onclick: "") + "\"" + " id=" + buttonsInfo.button2Id + " disabled>" + 
+                          "<i class=\"fa fa-undo\"></i>" +
+                          buttonsInfo.button2Label + 
+                          "</button>" + 
+                          "</div>";
+        retStr = retStr + "</div>";
+
+        if(fldListWithPluginInfo.FieldList != null && fldListWithPluginInfo.FieldList.size() > 0)
+        {
+            for(FieldDetails fldDtls : fldListWithPluginInfo.FieldList)
+            {
+                if(fldDtls != null && fldDtls.fieldType.equalsIgnoreCase("Lookup"))
+                {
+                    retStr = retStr + "<div class=\"form-group paddingtop\">";
+                    retStr = retStr + "<label class=\"col-md-3 control-label\">" + fldDtls.fieldLabel + " " 
+                                    + "<font style='color:red;'>*</font>"
+                                    + "</label>";
+                    retStr = retStr + "<div class=\"col-md-8\">";
+                    retStr = retStr + "<select id=\"" + fldDtls.fieldId + "\"" +" name=\"" + fldDtls.fieldName
+                                    + "\" onchange=\"" + (!fldDtls.onChangeMethodName.isEmpty()?fldDtls.onChangeMethodName : "") + "\"" +"  paramtype=\"Lookup\" class=\" form-control validate[required] inputfrm\"  title=\"" + fldDtls.fieldDescription + "\" data-live-search=\"true\" data-dropup-auto=\"false\" style=\"height: 36px;\" data-size=\"4\"  disabled>";
+                    if(fldDtls.defaultOptionNameList != null && fldDtls.defaultOptionValueList != null && fldDtls.defaultOptionNameList.size() ==  fldDtls.defaultOptionValueList.size() && !fldDtls.defaultOptionValueList.isEmpty())
+                    {
+                        for(int i = 0; i < fldDtls.defaultOptionNameList.size(); i++)
+                        {
+                            retStr += "<option value=\"" + fldDtls.defaultOptionValueList.get(i) + "\">" + fldDtls.defaultOptionNameList.get(i) + "</option>";
+                        }
+                        retStr += "</select>";
+                    }
+                    retStr = retStr + "</div>";
+                    retStr = retStr + "<div class=\"col-md-1\" style=\"padding-top:12px;\">";
+                    retStr = retStr + "<span class=\"glyphicon glyphicon-info-sign pop\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"" + fldDtls.fieldDescription + "\"></span>";
+                    retStr = retStr + "</div>";
+                    retStr = retStr + "</div>";
+                }
+                else if(fldDtls != null && fldDtls.fieldType.equalsIgnoreCase("SingleLineText"))
+                {
+                    retStr += "<div class=\"form-group\">";
+                    retStr += "<label class=\"col-md-3 control-label\">" + fldDtls.fieldLabel + " " 
+                                    +"<font style='color:red;'>*</font>"
+                                    + "</label>";
+                    retStr += "<div class=\"col-md-8\">";
+                    retStr += "<div class=\"input-group\">";
+                    retStr += "<input issequirityparam='N' paramtype='SingleLineText' class='form-control inputfrm validate[required]  data-prompt-position=\"topRight:100,3\"  required ' type='text' id=\"" + fldDtls.fieldId + "\""
+                                    + " name=\"" + fldDtls.fieldName + "\"" +" value='' autocomplete=\"new-password\" disabled />";
+
+                    retStr += "<div class=\"input-group-btn\">" + "<button type=\"button\" id=" + "\"btn_" + fldDtls.fieldId + "\"" + " onclick=\"LoadTreeData(event)\" class=\"btn dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\" style=\"height: 36px;\" disabled>\r\n"
+                                    + "<span class=\"glyphicon glyphicon-import\" aria-hidden=\"true\"></span>\r\n"
+                                    + "<span class=\"sr-only\">Toggle Dropdown</span>\r\n" + "</button>\r\n" + "</div>\r\n" + "</div>";
+                    retStr += "</div>";
+                    retStr += "<div class=\"col-md-1\" style=\"padding-top:12px;\">";
+                    retStr += "<span class=\"glyphicon glyphicon-info-sign pop\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"" + fldDtls.fieldDescription + "\"></span>";
+                    retStr += "</div>";
+                    retStr += "</div>";
+                }
+                else if(fldDtls != null && fldDtls.fieldType.equalsIgnoreCase("LookupButton"))
+                {
+                    retStr += "<div class=\"form-group\">";
+                    retStr += "<label class=\"col-md-3 control-label\" style=\"padding-right: 25px;\" >" + fldDtls.fieldLabel + " "
+                                + "</label>";
+                    retStr += "<div class=\"col-md-8\">";
+                    retStr += "<div class=\"input-group\">";
+                    retStr += "<select id=\"" + fldDtls.fieldId + "\"" + " name=\"" + fldDtls.fieldName + "\""
+                                + " onchange=\"\" paramtype=\"Lookup\"class=\"selectpicker form-control  validate[required]\" title=\"" + fldDtls.fieldDescription + "\" data-live-search=\"true\" data-dropup-auto=\"false\" data-size=\"4\"  disabled>";
+                    if(fldDtls.defaultOptionNameList != null && fldDtls.defaultOptionValueList != null && fldDtls.defaultOptionNameList.size() ==  fldDtls.defaultOptionValueList.size() && !fldDtls.defaultOptionValueList.isEmpty())
+                    {
+                        for(int i = 0; i < fldDtls.defaultOptionNameList.size(); i++)
+                        {
+                            retStr += "<option value=\"" + fldDtls.defaultOptionValueList.get(i) + "\">" + fldDtls.defaultOptionNameList.get(i) + "</option>";
+                        }
+                        retStr += "</select>";
+                    }
+                    retStr += "<div class=\"input-group-btn\">" 
+                                + "<button type=\"button\" id=\"btn_Add\" onclick=\"AddFields('')\" class=\"btn dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\" style=\"height: 36px; color: blue;\"  title=\"Add field\" disabled>" 
+                                + "<i class=\"fa fa-plus\" aria-hidden=\"true\"></i>" 
+                                + "</button>" 
+                                + "</div>";
+                    retStr += "</div>";
+                    retStr += "</div>";
+                    retStr += "<div class=\"col-md-1\" style=\"padding-top:12px;\">";
+                    retStr += "<span class=\"glyphicon glyphicon-info-sign pop\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=" + fldDtls.fieldDescription + "></span>";
+                    retStr += "</div>";
+                    retStr += "</div>";
+                    retStr += "<div class=\"form-group\">";
+                    retStr += "<div id=\"parentdiv\" class=\"parentdiv\" ></div>";
+                    retStr += "</div>";
+                    retStr += "</div>";             
+                }
+                
+            }
+        }
+
+    }     
+    return retStr;
+}
+
+}

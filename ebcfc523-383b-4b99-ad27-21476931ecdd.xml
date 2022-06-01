@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bns:Component xmlns:bns="http://api.platform.boomi.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" componentId="ebcfc523-383b-4b99-ad27-21476931ecdd" createdBy="debasishp@kovair.com" createdDate="2022-04-27T13:49:11Z" currentVersion="true" deleted="false" folderFullPath="Kovair Software Inc./Process Library" folderId="Rjo0ODA4MTUx" folderName="Process Library" modifiedBy="debasishp@kovair.com" modifiedDate="2022-05-10T09:38:18Z" name="Component_1" type="process" version="8">
+<bns:Component xmlns:bns="http://api.platform.boomi.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" componentId="ebcfc523-383b-4b99-ad27-21476931ecdd" createdBy="debasishp@kovair.com" createdDate="2022-04-27T13:49:11Z" currentVersion="true" deleted="false" folderFullPath="Kovair Software Inc./Process Library" folderId="Rjo0ODA4MTUx" folderName="Process Library" modifiedBy="debasishp@kovair.com" modifiedDate="2022-06-01T07:29:57Z" name="Component_1" type="process" version="9">
 <bns:encryptedValues/>
 <bns:description/>
 <bns:object>
@@ -10,16 +10,16 @@
 <noaction/>
 </configuration>
 <dragpoints>
-<dragpoint name="shape1.dragpoint1" toShape="shape2" x="256.0" y="41.0">
+<dragpoint name="shape1.dragpoint1" toShape="shape15" x="240.0" y="41.0">
 <linesegment length="0" name="shape1.dragpoint1.lineseg1" orient="horizontal" x="130.0" y="111.0"/>
 <linesegment length="0" name="shape1.dragpoint1.lineseg2" orient="vertical" x="130.0" y="111.0"/>
-<linesegment length="71" name="shape1.dragpoint1.lineseg3" orient="horizontal" x="130.0" y="111.0"/>
-<linesegment length="64" name="shape1.dragpoint1.lineseg4" orient="vertical" x="201.0" y="47.0"/>
-<linesegment length="55" name="shape1.dragpoint1.lineseg5" orient="horizontal" x="201.0" y="47.0"/>
+<linesegment length="63" name="shape1.dragpoint1.lineseg3" orient="horizontal" x="130.0" y="111.0"/>
+<linesegment length="64" name="shape1.dragpoint1.lineseg4" orient="vertical" x="193.0" y="47.0"/>
+<linesegment length="47" name="shape1.dragpoint1.lineseg5" orient="horizontal" x="193.0" y="47.0"/>
 </dragpoint>
 </dragpoints>
 </shape>
-<shape image="notify_icon" name="shape2" shapetype="notify" userlabel="Notify kovair" x="272.0" y="32.0">
+<shape image="notify_icon" name="shape2" shapetype="notify" userlabel="Notify kovair" x="400.0" y="0.0">
 <configuration>
 <notify disableEvent="true" enableUserLog="false" perExecution="false" title="">
 <notifyMessage>hi kovair</notifyMessage>
@@ -28,22 +28,22 @@
 </notify>
 </configuration>
 <dragpoints>
-<dragpoint name="shape2.dragpoint1" toShape="shape3" x="384.0" y="73.0">
-<linesegment length="0" name="shape2.dragpoint1.lineseg1" orient="horizontal" x="306.0" y="47.0"/>
-<linesegment length="0" name="shape2.dragpoint1.lineseg2" orient="vertical" x="306.0" y="47.0"/>
-<linesegment length="47" name="shape2.dragpoint1.lineseg3" orient="horizontal" x="306.0" y="47.0"/>
-<linesegment length="32" name="shape2.dragpoint1.lineseg4" orient="vertical" x="353.0" y="47.0"/>
-<linesegment length="31" name="shape2.dragpoint1.lineseg5" orient="horizontal" x="353.0" y="79.0"/>
+<dragpoint name="shape2.dragpoint1" toShape="shape3" x="640.0" y="9.0">
+<linesegment length="0" name="shape2.dragpoint1.lineseg1" orient="horizontal" x="434.0" y="15.0"/>
+<linesegment length="0" name="shape2.dragpoint1.lineseg2" orient="vertical" x="434.0" y="15.0"/>
+<linesegment length="111" name="shape2.dragpoint1.lineseg3" orient="horizontal" x="434.0" y="15.0"/>
+<linesegment length="0" name="shape2.dragpoint1.lineseg4" orient="vertical" x="545.0" y="15.0"/>
+<linesegment length="95" name="shape2.dragpoint1.lineseg5" orient="horizontal" x="545.0" y="15.0"/>
 </dragpoint>
 </dragpoints>
 </shape>
-<shape image="stop_icon" name="shape3" shapetype="stop" userlabel="End of the process" x="400.0" y="64.0">
+<shape image="stop_icon" name="shape3" shapetype="stop" userlabel="End of the process" x="656.0" y="0.0">
 <configuration>
 <stop continue="false"/>
 </configuration>
 <dragpoints/>
 </shape>
-<shape image="connectoraction_icon" name="shape8" shapetype="connectoraction" userlabel="Jira" x="256.0" y="144.0">
+<shape image="connectoraction_icon" name="shape8" shapetype="connectoraction" userlabel="Jira" x="480.0" y="192.0">
 <configuration>
 <connectoraction actionType="QUERY" allowDynamicCredentials="NONE" connectionId="f7604a04-b925-4726-8254-62c0ea036a06" connectorType="wdci-MW671S-jirare-prod" hideSettings="false" operationId="deebfeb5-3f38-48c4-b8f9-d525d08cbe21">
 <parameters/>
@@ -51,14 +51,60 @@
 </connectoraction>
 </configuration>
 <dragpoints>
-<dragpoint name="shape8.dragpoint1" toShape="shape2" x="256.0" y="41.0">
-<linesegment length="10" name="shape8.dragpoint1.lineseg1" orient="horizontal" x="290.0" y="159.0"/>
-<linesegment length="51" name="shape8.dragpoint1.lineseg2" orient="vertical" x="300.0" y="108.0"/>
-<linesegment length="48" name="shape8.dragpoint1.lineseg3" orient="horizontal" x="252.0" y="108.0"/>
-<linesegment length="61" name="shape8.dragpoint1.lineseg4" orient="vertical" x="252.0" y="47.0"/>
-<linesegment length="4" name="shape8.dragpoint1.lineseg5" orient="horizontal" x="252.0" y="47.0"/>
+<dragpoint name="shape8.dragpoint1" toShape="shape15" x="240.0" y="41.0">
+<linesegment length="10" name="shape8.dragpoint1.lineseg1" orient="horizontal" x="514.0" y="207.0"/>
+<linesegment length="51" name="shape8.dragpoint1.lineseg2" orient="vertical" x="524.0" y="156.0"/>
+<linesegment length="288" name="shape8.dragpoint1.lineseg3" orient="horizontal" x="236.0" y="156.0"/>
+<linesegment length="109" name="shape8.dragpoint1.lineseg4" orient="vertical" x="236.0" y="47.0"/>
+<linesegment length="4" name="shape8.dragpoint1.lineseg5" orient="horizontal" x="236.0" y="47.0"/>
 </dragpoint>
 </dragpoints>
+</shape>
+<shape image="programcmd_icon" name="shape11" shapetype="programcmd" userlabel="Execute command" x="304.0" y="256.0">
+<configuration>
+<programcmd perExecution="false">
+<configuration valueType="command">
+<commandparameter command="hostname"/>
+</configuration>
+<parameters/>
+</programcmd>
+</configuration>
+<dragpoints>
+<dragpoint name="shape11.dragpoint1" toShape="shape15" x="240.0" y="41.0">
+<linesegment length="10" name="shape11.dragpoint1.lineseg1" orient="horizontal" x="338.0" y="271.0"/>
+<linesegment length="51" name="shape11.dragpoint1.lineseg2" orient="vertical" x="348.0" y="220.0"/>
+<linesegment length="112" name="shape11.dragpoint1.lineseg3" orient="horizontal" x="236.0" y="220.0"/>
+<linesegment length="173" name="shape11.dragpoint1.lineseg4" orient="vertical" x="236.0" y="47.0"/>
+<linesegment length="4" name="shape11.dragpoint1.lineseg5" orient="horizontal" x="236.0" y="47.0"/>
+</dragpoint>
+</dragpoints>
+</shape>
+<shape image="branch_icon" name="shape15" shapetype="branch" userlabel="branch" x="256.0" y="32.0">
+<configuration>
+<branch numBranches="2"/>
+</configuration>
+<dragpoints>
+<dragpoint identifier="1" name="shape15.dragpoint1" text="1" toShape="shape2" x="384.0" y="9.0">
+<linesegment length="0" name="shape15.dragpoint1.lineseg1" orient="horizontal" x="290.0" y="47.0"/>
+<linesegment length="0" name="shape15.dragpoint1.lineseg2" orient="vertical" x="290.0" y="47.0"/>
+<linesegment length="55" name="shape15.dragpoint1.lineseg3" orient="horizontal" x="290.0" y="47.0"/>
+<linesegment length="32" name="shape15.dragpoint1.lineseg4" orient="vertical" x="345.0" y="15.0"/>
+<linesegment label="1" length="39" name="shape15.dragpoint1.lineseg5" orient="horizontal" x="345.0" y="15.0"/>
+</dragpoint>
+<dragpoint identifier="2" name="shape15.dragpoint2" text="2" toShape="shape16" x="480.0" y="89.0">
+<linesegment length="0" name="shape15.dragpoint2.lineseg1" orient="horizontal" x="290.0" y="47.0"/>
+<linesegment length="0" name="shape15.dragpoint2.lineseg2" orient="vertical" x="290.0" y="47.0"/>
+<linesegment length="103" name="shape15.dragpoint2.lineseg3" orient="horizontal" x="290.0" y="47.0"/>
+<linesegment length="48" name="shape15.dragpoint2.lineseg4" orient="vertical" x="393.0" y="47.0"/>
+<linesegment label="2" length="87" name="shape15.dragpoint2.lineseg5" orient="horizontal" x="393.0" y="95.0"/>
+</dragpoint>
+</dragpoints>
+</shape>
+<shape image="stop_icon" name="shape16" shapetype="stop" userlabel="stop here" x="496.0" y="80.0">
+<configuration>
+<stop continue="true"/>
+</configuration>
+<dragpoints/>
 </shape>
 </shapes>
 </process>

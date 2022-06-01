@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bns:Component xmlns:bns="http://api.platform.boomi.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" componentId="28ffd84e-4ee8-445a-84a5-6d8c7777908f" createdBy="debasishp@kovair.com" createdDate="2022-04-29T10:16:55Z" currentVersion="true" deleted="false" folderFullPath="Kovair Software Inc./Process Library" folderId="Rjo0ODA4MTUx" folderName="Process Library" modifiedBy="debasishp@kovair.com" modifiedDate="2022-05-06T08:48:20Z" name="Component2" type="process" version="3">
+<bns:encryptedValues/>
+<bns:description/>
+<bns:object>
+<process allowSimultaneous="false" enableUserLog="false" processLogOnErrorOnly="false" purgeDataImmediately="false" updateRunDates="true" workload="general">
+<shapes>
+<shape image="start" name="shape1" shapetype="start" userlabel="Start" x="96.0" y="96.0">
+<configuration>
+<noaction/>
+</configuration>
+<dragpoints>
+<dragpoint name="shape1.dragpoint1" toShape="shape6" x="224.0" y="105.0">
+<linesegment length="0" name="shape1.dragpoint1.lineseg1" orient="horizontal" x="130.0" y="111.0"/>
+<linesegment length="0" name="shape1.dragpoint1.lineseg2" orient="vertical" x="130.0" y="111.0"/>
+<linesegment length="55" name="shape1.dragpoint1.lineseg3" orient="horizontal" x="130.0" y="111.0"/>
+<linesegment length="0" name="shape1.dragpoint1.lineseg4" orient="vertical" x="185.0" y="111.0"/>
+<linesegment length="39" name="shape1.dragpoint1.lineseg5" orient="horizontal" x="185.0" y="111.0"/>
+</dragpoint>
+</dragpoints>
+</shape>
+<shape image="notify_icon" name="shape4" shapetype="notify" userlabel="Notify JD" x="288.0" y="160.0">
+<configuration>
+<notify disableEvent="true" enableUserLog="false" perExecution="false" title="JOYDEEP">
+<notifyMessage>Warning to JOYDEEP</notifyMessage>
+<notifyMessageLevel>WARNING</notifyMessageLevel>
+<notifyParameters>
+<parametervalue key="0" valueType="static">
+<staticparameter staticproperty="100"/>
+</parametervalue>
+</notifyParameters>
+</notify>
+</configuration>
+<dragpoints>
+<dragpoint name="shape4.dragpoint1" toShape="shape5" x="464.0" y="169.0">
+<linesegment length="0" name="shape4.dragpoint1.lineseg1" orient="horizontal" x="322.0" y="175.0"/>
+<linesegment length="0" name="shape4.dragpoint1.lineseg2" orient="vertical" x="322.0" y="175.0"/>
+<linesegment length="79" name="shape4.dragpoint1.lineseg3" orient="horizontal" x="322.0" y="175.0"/>
+<linesegment length="0" name="shape4.dragpoint1.lineseg4" orient="vertical" x="401.0" y="175.0"/>
+<linesegment length="63" name="shape4.dragpoint1.lineseg5" orient="horizontal" x="401.0" y="175.0"/>
+</dragpoint>
+</dragpoints>
+</shape>
+<shape image="stop_icon" name="shape5" shapetype="stop" userlabel="End of the process" x="480.0" y="160.0">
+<configuration>
+<stop continue="false"/>
+</configuration>
+<dragpoints/>
+</shape>
+<shape image="notify_icon" name="shape6" shapetype="notify" userlabel="ShowHello" x="240.0" y="96.0">
+<configuration>
+<notify disableEvent="true" enableUserLog="false" perExecution="false" title="">
+<notifyMessage>Hello World</notifyMessage>
+<notifyMessageLevel>INFO</notifyMessageLevel>
+<notifyParameters/>
+</notify>
+</configuration>
+<dragpoints>
+<dragpoint name="shape6.dragpoint1" toShape="shape4" x="272.0" y="169.0">
+<linesegment length="0" name="shape6.dragpoint1.lineseg1" orient="horizontal" x="274.0" y="111.0"/>
+<linesegment length="0" name="shape6.dragpoint1.lineseg2" orient="vertical" x="274.0" y="111.0"/>
+<linesegment length="7" name="shape6.dragpoint1.lineseg3" orient="horizontal" x="274.0" y="111.0"/>
+<linesegment length="64" name="shape6.dragpoint1.lineseg4" orient="vertical" x="281.0" y="111.0"/>
+<linesegment length="-9" name="shape6.dragpoint1.lineseg5" orient="horizontal" x="281.0" y="175.0"/>
+</dragpoint>
+</dragpoints>
+</shape>
+</shapes>
+</process>
+</bns:object>
+<bns:processOverrides/>
+</bns:Component>
